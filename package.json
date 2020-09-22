@@ -3,8 +3,17 @@
   "version": "0.0.1",
   "description": "Server for uploading and serving signatures.",
   "main": "index.js",
+  "scripts": {
+    "start": "node ./app.js"
+  },
   "repository": "github:jkeam/sigserver",
   "author": "Jon Keam <jpkeam@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "serve-index": "^1.9.1",
+    "winston": "^3.3.3"
+  }
 }
