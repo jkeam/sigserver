@@ -1,0 +1,10 @@
+{
+  "name": "sigserver",
+  "version": "0.0.1",
+  "description": "Server for uploading and serving signatures.",
+  "main": "index.js",
+  "repository": "github:jkeam/sigserver",
+  "author": "Jon Keam <jpkeam@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
