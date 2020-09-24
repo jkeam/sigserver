@@ -1,8 +1,8 @@
-FROM centos/nodejs-12-centos7
-
+FROM registry.redhat.io/ubi8/nodejs-12
 WORKDIR /usr/src/app
-USER root
 COPY . .
+
+USER root
 RUN useradd sigserver && chown -R sigserver /usr/src/app && chown -R sigserver /opt/app-root/src/
 
 USER sigserver
