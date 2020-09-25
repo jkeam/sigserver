@@ -43,14 +43,21 @@ app.post('/upload', async (req, res, next) => {
 
     await fs.promises.mkdir(fileParts.join('/'), { recursive: true });
     fs.open(filePath, 'w', (err, fd) => {
+      if (err) {
+        logger.error('Exception preparing file for write', err);
+        return next(err);
+      }
       fs.write(fd, req.body, 0, req.body.length, null, (err) => {
-        if (err) throw err;
+        if (err) {
+          logger.error('Exception writing uploaded file', err);
+          return next(err);
+        }
         fs.close(fd, () => res.status(200).end());
       });
     });
-  } catch (e) {
-    logger.error('Exception uploading', e);
-    next(e);
+  } catch (err) {
+    logger.error('Exception uploading', err);
+    next(err);
   }
 });
 
