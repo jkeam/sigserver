@@ -17,6 +17,8 @@ const loggerOptions = {
 app.use(expressWinston.logger(loggerOptions));
 const logger = winston.createLogger(loggerOptions);
 
+const DATA_FILENAME_HEADER = 'Data-Filename';
+
 app.use(bodyParser.raw({type: 'application/octet-stream', limit : '2mb'}))
 app.use(express.static(signaturePath))
 app.use('/signatures', express.static(signaturePath), serveIndex(signaturePath, {'icons': true}));
@@ -25,7 +27,17 @@ app.get('/', (req,res) => res.send('Sigserver is up'));
 
 app.post('/upload', async (req, res, next) => {
   try {
-    const filePath = path.join(signaturePath, req.header('Data-Filename'));
+    const fileName = req.header(DATA_FILENAME_HEADER);
+    if (!fileName) {
+      res.statusMessage = `Missing ${DATA_FILENAME_HEADER}`;
+      return res.status(400).end();
+    }
+    if (!req.body || !req.body.length) {
+      res.statusMessage = `Missing file`;
+      return res.status(400).end();
+    }
+
+    const filePath = path.join(signaturePath, fileName);
     const fileParts = filePath.split('/');
     fileParts.pop();
 
