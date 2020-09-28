@@ -6,6 +6,7 @@ const expressWinston = require('express-winston');
 const serveIndex = require('serve-index');
 const bodyParser = require('body-parser');
 const fs = require('fs');
+const https = require('https');
 
 const signaturePath = process.env.SIGNATURE_PATH || './public/signatures';
 const loggerOptions = {
@@ -62,6 +63,15 @@ app.post('/upload', async (req, res, next) => {
 });
 
 const port = process.env.PORT || 8080;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server is up and running on port ${port}`);
-});
+const certPath = process.env.CERT_PATH;
+const keyPath = process.env.KEY_PATH;
+
+const onReady = () => console.log(`Server is up and running on port ${port}`);
+if (certPath && keyPath) {
+  https.createServer({
+    cert: fs.readFileSync(certPath),
+    key: fs.readFileSync(keyPath),
+  }, app).listen(port, '0.0.0.0', onReady);
+} else {
+  app.listen(port, '0.0.0.0', onReady);
+}
