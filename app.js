@@ -24,7 +24,7 @@ app.use(bodyParser.raw({type: 'application/octet-stream', limit : '2mb'}))
 app.use(express.static(signaturePath))
 app.use('/signatures', express.static(signaturePath), serveIndex(signaturePath, {'icons': true}));
 
-app.get('/', (req,res) => res.send('Sigserver is up'));
+app.get('/', (req,res) => res.status(200).send({success: true, message: 'Sigserver is up'}));
 
 app.post('/upload', async (req, res, next) => {
   try {
@@ -62,16 +62,4 @@ app.post('/upload', async (req, res, next) => {
   }
 });
 
-const port = process.env.PORT || 8080;
-const certPath = process.env.CERT_PATH;
-const keyPath = process.env.KEY_PATH;
-
-const onReady = () => console.log(`Server is up and running on port ${port}`);
-if (certPath && keyPath) {
-  https.createServer({
-    cert: fs.readFileSync(certPath),
-    key: fs.readFileSync(keyPath),
-  }, app).listen(port, '0.0.0.0', onReady);
-} else {
-  app.listen(port, '0.0.0.0', onReady);
-}
+module.exports = app;
