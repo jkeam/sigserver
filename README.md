@@ -1,5 +1,6 @@
 # Sigserver
 [![Build Status](https://travis-ci.com/jkeam/sigserver.svg?branch=master)](https://travis-ci.com/jkeam/sigserver)
+
 Server to allow uploading and serving of signatures.
 
 ## Prequisites
