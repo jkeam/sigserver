@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./server.js",
-    "test": "SIGNATURE_PATH=./tests/output_files jest"
+    "test": "SIGNATURE_PATH=./tests/output_files jest",
+    "coverage": "npm test -- --coverage",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | coveralls"
   },
   "repository": "github:jkeam/sigserver",
   "author": "Jon Keam <jpkeam@gmail.com>",
@@ -19,13 +21,20 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "coveralls": "^3.1.0",
     "jest": "^26.4.2",
     "supertest": "^5.0.0"
   },
   "jest": {
     "testEnvironment": "node",
+    "collectCoverage": true,
     "coveragePathIgnorePatterns": [
       "/node_modules/"
+    ],
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
     ]
   }
 }

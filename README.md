@@ -1,5 +1,6 @@
 # Sigserver
 [![Build Status](https://travis-ci.com/jkeam/sigserver.svg?branch=master)](https://travis-ci.com/jkeam/sigserver)
+[![Coverage Status](https://coveralls.io/repos/github/jkeam/sigserver/badge.svg?branch=master)](https://coveralls.io/github/jkeam/sigserver?branch=master)
 
 Server to allow uploading and serving of signatures.
 
