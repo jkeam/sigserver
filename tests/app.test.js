@@ -37,4 +37,12 @@ describe('App Test', () => {
     const response = await request(app).get('/signatures/does/not/exist/abc');
     expect(response.statusCode).toBe(404);
   });
+
+  it('should return error if missing input file name', async () => {
+    const uploadResponse = await request(app)
+      .post('/upload')
+      .send(JSON.stringify('asdf'))
+      .set('Content-Type', 'application/octet-stream')
+    expect(uploadResponse.statusCode).toBe(400);
+  });
 });
